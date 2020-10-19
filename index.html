@@ -244,6 +244,70 @@ var nizBlokova = ["get_odgovor", "novosti_post", "kategorije_post", "brisanje_re
                         
                     }
                     break;
+                    
+                    case "delete":
+                    if(tabela=="radio_novosti"){
+                        var values = parseInt($("#brisanje").val());
+                        $.ajax({
+                            url: 'http://localhost:80/rest/api/novosti/'+values,
+                            method: 'DELETE',
+                            success:function(){
+                                console.log(values);
+                                alert('Novost je uspesno obrisana.')
+                            }
+
+                        });
+                    }else{
+                        var values = parseInt($("#brisanje").val());
+                        $.ajax({
+                            url: 'http://localhost:80/rest/api/kategorije/'+values,
+                            method: 'DELETE',
+                            success:function(){
+                                console.log(values);
+                                alert('Kategorija je uspesno obrisana.')
+                            }
+
+                        });
+                    }
+                    break;
+
+                    case "put":
+                        if(tabela=="radio_novosti"){
+                            var ID = parseInt($("#id_novosti").val());
+                            var values ={
+                                "naslov": $("input[name=naslov_novosti_put]").val(),
+                                "tekst":$("#tekst_novosti_put").val(),
+                                "kategorija_id": parseInt($("#kategorija_odabir_put").val())
+                            };
+                            $.ajax({
+                                url: 'http://localhost:80/rest/api/novosti/'+ID,
+                                method: 'PUT',
+                                data: JSON.stringify(values),
+                                contentType: 'application/json',
+                                success:function(){
+                                    console.log(values);
+                                    alert('Novost je uspesno azurirana.')
+                                }
+
+                            });
+                        }else{
+                            var ID = parseInt($("#id_kategorije").val());
+                            var values ={
+                                "kategorija": $("input[name=kategorija_naziv_put]").val()
+                            };
+                            $.ajax({
+                                url: 'http://localhost:80/rest/api/kategorije/'+ID,
+                                method: 'PUT',
+                                data: JSON.stringify(values),
+                                contentType: 'application/json',
+                                success:function(){
+                                    console.log(values);
+                                    alert('Kategorija je uspesno azurirana.')
+                                }
+
+                            });
+                        }
+                        break;
                 default:
                         console.log("def");
             }
